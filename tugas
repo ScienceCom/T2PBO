@@ -1,0 +1,74 @@
+import random
+
+class Robot:
+    def __init__(self, name, hp, attack_power, accuracy):
+        self.name = name
+        self.hp = hp
+        self.attack_power = attack_power
+        self.accuracy = accuracy
+
+    def attack_enemy(self, enemy):
+        if random.random() <= self.accuracy:
+            damage = random.randint(int(self.attack_power * 0.8), self.attack_power)
+            enemy.hp -= damage
+            print(f"{self.name} menyerang {enemy.name} dan memberikan {damage} damage!")
+        else:
+            print(f"{self.name} gagal menyerang {enemy.name}!")
+
+    def regen_health(self):
+        heal = random.randint(5, 40)
+        self.hp += heal
+        print(f"{self.name} memulihkan {heal} HP!")
+
+    def is_alive(self):
+        return self.hp > 0
+
+    def info(self):
+        print(f"{self.name} [HP: {self.hp} | Attack: {self.attack_power}]")
+
+
+class Game:
+    def __init__(self, robot1, robot2):
+        self.robot1 = robot1
+        self.robot2 = robot2
+        self.round = 1
+
+    def play(self):
+        while self.robot1.is_alive() and self.robot2.is_alive():
+            print(f"\nRound-{self.round} ===========================================")
+            self.robot1.info()
+            self.robot2.info()
+
+            self.take_turn(self.robot1, self.robot2)
+            if not self.robot2.is_alive():
+                print(f"{self.robot1.name} menang!")
+                break
+
+            self.take_turn(self.robot2, self.robot1)
+            if not self.robot1.is_alive():
+                print(f"{self.robot2.name} menang!")
+                break
+
+            self.round += 1
+
+    def take_turn(self, robot, enemy):
+        print(f"\n1. Attack     2. Regen     3. Surrender")
+        choice = input(f"{robot.name}, pilih aksi: ")
+
+        if choice == '1':
+            robot.attack_enemy(enemy)
+        elif choice == '2':
+            robot.regen_health()
+        elif choice == '3':
+            print(f"{robot.name} menyerah!")
+            robot.hp = 0
+        else:
+            print("Pilihan tidak valid!")
+
+
+# Contoh permainan
+robot1 = Robot("Atreus", 500, 50, 0.8)
+robot2 = Robot("Daedalus", 750, 40, 0.7)
+
+battle = Game(robot1, robot2)
+battle.play()
