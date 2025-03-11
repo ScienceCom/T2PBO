@@ -1,0 +1,63 @@
+class Kendaraan():
+    def __init__(self, jenis, kecepatan_maksimum):
+        self.jenis = jenis
+        self.kecepatan_maksimum = kecepatan_maksimum
+
+    def info_kendaraan(self):
+        print(f"Jenis kendaraan :{self.jenis}")
+        print(f"Kecepatan maksimum Kendaraan :{self.kecepatan_maksimum} km/jam")
+    
+    def bergerak(self):
+        print(f"Kendaraan {self.jenis} bergerak dengan kecepatan maksimum {self.kecepatan_maksimum} km/jam")
+
+class mobil(Kendaraan):
+    def __init__(self, jenis, kecepatan_maksimum, Merk, Jumlah_pintu):
+        super().__init__(jenis, kecepatan_maksimum)
+        self.Merk = Merk
+        self.Jumlah_pintu = Jumlah_pintu
+    
+    def info_mobil(self):
+        print(f"Brand mobil ini adalah {self.Merk}")
+        print(f"jumlah pintu dari brand mobil ini adalah {self.Jumlah_pintu}")
+    
+    def bunyikan_klakson(self):
+        print(f"{self.Merk} : beep beep")
+
+class MobilSport(mobil):
+    def __init__(self, jenis, kecepatan_maksimum, Merk, Jumlah_pintu, tenaga_kuda, harga):
+        super().__init__(jenis, kecepatan_maksimum, Merk, Jumlah_pintu)
+        self.__tenaga_kuda = tenaga_kuda
+        self.__harga = harga
+    
+    def get_tenaga_kuda(self):
+        return self.__tenaga_kuda
+    
+    def set_tenaga_kuda(self, value):
+        if value > 0:
+           self.__tenaga_kuda = value
+        else:
+          print("Harga harus positif")
+        
+    def get_harga(self):
+        return self.__harga
+
+    def set_harga(self, value):
+        if value > 0:
+            self.__harga = value
+        else:
+            print("Harga harus positif!")
+
+    def info_mobil_sport(self):
+        self.info_mobil()
+        print(f"Tenaga Kuda: {self.__tenaga_kuda} HP")
+        print(f"Harga: {self.__harga} juta rupiah")
+
+    def mode_balap(self):
+        print(f"{self.Merk} masuk ke mode balap!")
+
+
+mobil_sport = MobilSport("Darat", 350, "Ferrari", 2, 700, 15000)
+mobil_sport.info_mobil_sport()
+mobil_sport.mode_balap()
+mobil_sport.set_harga(16000)
+print(f"Harga baru: {mobil_sport.get_harga()} juta rupiah")
